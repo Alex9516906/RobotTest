@@ -8,12 +8,21 @@ class OffTheField
 {
 public:
     string m_error = " Off the Field";
+    
+    OffTheField(int top, int right) 
+    {
+        cout << "possition Robot Top : " << top << "right : " << right << endl;
+    }
 };
 
 class IllegalCommand
 {
 public:
     string m_error = " IllegalCommand";
+    IllegalCommand(int top, int right) 
+    {
+        cout << "possition Robot Top : " << top << " right : " << right << endl;
+    }
 };
 
 
@@ -54,7 +63,7 @@ public:
         {
             if (posRobotRight - 1 < 0)
             {
-                throw OffTheField();
+                throw OffTheField(posRobotTop, posRobotRight);
             }
             Pole[posRobotTop][posRobotRight] = empty1;
             Pole[posRobotTop][posRobotRight - 1] = robot;
@@ -65,7 +74,7 @@ public:
         {
             if (posRobotRight + 1 > size)
             {
-                throw OffTheField();
+                throw OffTheField(posRobotTop, posRobotRight);
             }
             Pole[posRobotTop][posRobotRight] = empty1;
             Pole[posRobotTop][posRobotRight + 1] = robot;
@@ -76,7 +85,7 @@ public:
         {
             if (posRobotTop - 1 < 0)
             {
-                throw OffTheField();
+                throw OffTheField(posRobotTop, posRobotRight);
             }
             Pole[posRobotTop][posRobotRight] = empty1;
             Pole[posRobotTop - 1][posRobotRight] = robot;
@@ -87,7 +96,7 @@ public:
         {
             if (posRobotTop + 1 > size)
             {
-                throw OffTheField();
+                throw OffTheField(posRobotTop, posRobotRight);
             }
             Pole[posRobotTop][posRobotRight] = empty1;
             Pole[posRobotTop + 1][posRobotRight] = robot;
@@ -95,7 +104,7 @@ public:
             print();
         }
         else
-            throw IllegalCommand();
+            throw IllegalCommand(posRobotTop, posRobotRight);
     }
     
     void print()
@@ -121,8 +130,10 @@ int main()
     while (true){
         try
         {
-        cout << "Enter the command" << endl;;
+        cout << "Enter the command (left/right/top/down/exit)" << endl;;
         cin >> command;
+        if (command == "exit" || command == "Exit")
+            break;
         robo.Move(command);  
         }
         catch (IllegalCommand& err)
@@ -133,6 +144,7 @@ int main()
         {
             std::cerr << "Error :" << err.m_error << std::endl;
         }
+        
     }
 
 
